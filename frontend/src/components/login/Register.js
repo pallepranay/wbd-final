@@ -55,7 +55,7 @@ const Register = () => {
     if (IsValidate()) {
       //console.log(regobj);
       axios
-        .post("http://localhost:5000/register", regobj)
+        .post("https://backendmasterdsa.onrender.com/register", regobj)
         .then((res) => {
           // console.log(res);
           const enteredOTP = prompt("Enter otp sent to mail");
@@ -65,7 +65,7 @@ const Register = () => {
           };
           toast.success("Registered successfully.");
           navigate("/login");
-          // axios.post("http://localhost:5000/verifyotp",verification).then(response => {
+          // axios.post("https://backendmasterdsa.onrender.com/verifyotp",verification).then(response => {
           //     console.log(response);
           //     if(response.status === 200){
           //     } else{

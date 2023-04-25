@@ -18,13 +18,15 @@ const Profile = () => {
     }
   }, [usenavigate, username]);
   useEffect(() => {
-    fetch(`http://localhost:5000/${username}`).then(async (response) => {
-      await response.json().then((data) => {
-        console.log(data);
-        if (data.img) return setOutput(data.img);
-        else return setOutput(null);
-      });
-    });
+    fetch(`https://backendmasterdsa.onrender.com/${username}`).then(
+      async (response) => {
+        await response.json().then((data) => {
+          console.log(data);
+          if (data.img) return setOutput(data.img);
+          else return setOutput(null);
+        });
+      }
+    );
   }, [updated, username]);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -34,7 +36,7 @@ const Profile = () => {
     const formData = new FormData();
     formData.append("name", username);
     formData.append("testImage", selectedFile);
-    const response = await fetch("http://localhost:5000", {
+    const response = await fetch("https://backendmasterdsa.onrender.com", {
       method: "POST",
       body: formData,
     });
@@ -48,13 +50,19 @@ const Profile = () => {
   return (
     <div>
       <div className="header">
-        <Link to={"/home"} style={{ float:'left', padding: "30px", marginTop: "20px" }}>
+        <Link
+          to={"/home"}
+          style={{ float: "left", padding: "30px", marginTop: "20px" }}
+        >
           <button type="" className="btn btn-secondary">
             home
           </button>
         </Link>
-        <Link style={{float:'right',padding: "30px", marginTop: "20px" }} to={"/login"}>
-        <button type="" className="btn btn-warning">
+        <Link
+          style={{ float: "right", padding: "30px", marginTop: "20px" }}
+          to={"/login"}
+        >
+          <button type="" className="btn btn-warning">
             logout
           </button>
         </Link>
