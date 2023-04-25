@@ -5,7 +5,7 @@ const multer = require("multer");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
-const mediaModel = require("./models/Media")
+// const mediaModel = require("./models/Media")
 const morgan = require("morgan");
 
 const bcrypt = require('bcryptjs')
@@ -61,30 +61,30 @@ mongoose
   .catch((err) => console.log("it has an error", err));
 
 
-app.use('/api/v1/media/all', async (req, res) => {
-  try {
-    const media = await mediaModel.find();
-    console.log(media)
-    res.json(media);
-  } catch (error) {
-    console.log(error);
-    res.status(400).json(error);
-  }
-})
+// app.use('/api/v1/media/all', async (req, res) => {
+//   try {
+//     const media = await mediaModel.find();
+//     console.log(media)
+//     res.json(media);
+//   } catch (error) {
+//     console.log(error);
+//     res.status(400).json(error);
+//   }
+// })
 
 app.use(function (req, res, next) {
   console.log(req.files); // JSON Object
   next();
 });
-app.use('/api/v1/media/create', upload.array('files', 5), async (req, res) => {
-  const { name, videos } = req.body;
-  let videosPaths = [];
-  console.log(req.file)
-  if (Array.isArray(req.files.videos) && req.files.videos.length > 0) {
-    for (let video of req.files.videos) {
-      videosPaths.push("/" + video.path);
-    }
-  }})
+// app.use('/api/v1/media/create', upload.array('files', 5), async (req, res) => {
+//   const { name, videos } = req.body;
+//   let videosPaths = [];
+//   console.log(req.file)
+//   if (Array.isArray(req.files.videos) && req.files.videos.length > 0) {
+//     for (let video of req.files.videos) {
+//       videosPaths.push("/" + video.path);
+//     }
+//   }})
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
