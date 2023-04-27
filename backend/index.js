@@ -52,7 +52,7 @@ const storage = multer.diskStorage({
 const upload = multer();
 
 mongoose
-  .connect("mongodb+srv://pranay5454:9848450067@cluster0.1kluw.mongodb.net/wbdlab?retryWrites=true&w=majority", {
+  .connect("mongodb+srv://rupendrashata:1020@cluster0.yw31qht.mongodb.net/WBD?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
