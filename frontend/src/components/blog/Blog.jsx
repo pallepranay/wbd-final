@@ -8,7 +8,7 @@ const Blog = () => {
   return (
     <>
     <Header/>
-      <Back title='DSA Interview Experience' />
+      <Back title='DSA' />
       <section className='blog padding'>
         <div className='container grid2'>
           <BlogCard />
