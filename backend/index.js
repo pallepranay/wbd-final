@@ -96,7 +96,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/courses", async (req, res) => {
   const course = await courses.find();
   //console.log(course)
-  res.json(course);
+  res.status(200).json(course);
   
 })
 
@@ -178,10 +178,12 @@ app.post("/enroll", async (req, res) => {
 // }
 
 app.post("/register", async (req, res) => {
+  console.log(req.body);
   const { name, email, phone, country, password, address } = req.body;
   const salt = await bcrypt.genSalt(10);
   const hashPass = await bcrypt.hash(password, salt);
   const otp = Math.floor(100000 + Math.random() * 900000) + "";
+  // console.log(otp)
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -197,8 +199,9 @@ app.post("/register", async (req, res) => {
     subject: "OTP for sign in",
     text: `otp is ${otp}`,
   };
+  console.log(name, hashPass, name, email, phone, country, address)
   const saveUser = new User({
-    username: id,
+    username: name,
     password: hashPass,
     name: name,
     email: email,
@@ -207,11 +210,13 @@ app.post("/register", async (req, res) => {
     Address: address,
     verified: false,
   });
+  console.log(saveUser)
   const newOTP = new OTP({
     email: email,
     OTP: otp,
     OTPTime: Date.now(),
   });
+  console.log(newOTP)
   OTP.find({ email: email }).then((otp) => {
     if (otp.length > 0) {
       OTP.deleteMany({ email: email });
@@ -226,6 +231,8 @@ app.post("/register", async (req, res) => {
     });
   });
   newOTP.save().then((otp) => {
+    console.log('otppppppppppppp')
+
     saveUser
       .save()
       .then((resp) => {
@@ -285,3 +292,5 @@ app.post("/login", async (req, res) => {
 app.listen(port, () => {
   console.log("server running successfully");
 });
+
+module.exports = app
