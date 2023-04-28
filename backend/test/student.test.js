@@ -50,30 +50,30 @@ describe("Registration API", () => {
       });
   });
 
-//   // test for invalid user registration
-//   it("should not register a new user with missing information", (done) => {
-//     const user = {
-//       password: "arpranay",
-//       name: "Palle Pranay Reddy",
-//       email: "ppranayreddy5454@gmail.com",
-//       phone: "9959458697",
-//       country: "India",
-//       address: "Hyderabad",
-//     };
-//     chai
-//       .request(app)
-//       .post("/register")
-//       .send(user)
-//       .end((err, res) => {
-//         res.should.have.status(500);
-//         res.body.should.be.a("object");
-//         res.body.should.have.property("msg").eql("some error incurred");
-//         done();
-//       });
-//   });
-//   afterEach(function (done) {
-//     done();
-//   });
+  //   // test for invalid user registration
+  //   it("should not register a new user with missing information", (done) => {
+  //     const user = {
+  //       password: "arpranay",
+  //       name: "Palle Pranay Reddy",
+  //       email: "ppranayreddy5454@gmail.com",
+  //       phone: "9959458697",
+  //       country: "India",
+  //       address: "Hyderabad",
+  //     };
+  //     chai
+  //       .request(app)
+  //       .post("/register")
+  //       .send(user)
+  //       .end((err, res) => {
+  //         res.should.have.status(500);
+  //         res.body.should.be.a("object");
+  //         res.body.should.have.property("msg").eql("some error incurred");
+  //         done();
+  //       });
+  //   });
+  //   afterEach(function (done) {
+  //     done();
+  //   });
 });
 
 // npm i mocha

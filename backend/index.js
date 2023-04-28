@@ -8,13 +8,12 @@ const path = require("path");
 // const mediaModel = require("./models/Media")
 const morgan = require("morgan");
 
+(async () => {
+  await client.connect();
+})();
 
-// (async () => {
-//   await client.connect();
-// })();
-
-// client.on('connect', () => console.log('::> Redis Client Connected'));
-// client.on('error', (err) => console.log('<:: Redis Client Error', err));
+client.on('connect', () => console.log('::> Redis Client Connected'));
+client.on('error', (err) => console.log('<:: Redis Client Error', err));
 
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
@@ -25,8 +24,6 @@ const ImageModel = require("./models");
 const User = require("./users");
 const OTP = require("./OTP");
 const courses = require("./course");
-
-
 
 const { v4: uuidv4 } = require("uuid");
 const port = 5000;
@@ -46,7 +43,8 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],})
+    methods: ["GET", "POST", "PATCH", "DELETE", "PUT"],
+  })
 );
 
 const storage = multer.diskStorage({
@@ -62,23 +60,29 @@ const storage = multer.diskStorage({
 const upload = multer();
 
 mongoose
-  .connect("mongodb+srv://rupendrashata:1020@cluster0.yw31qht.mongodb.net/WBD?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  .connect(
+    "mongodb+srv://rupendrashata:1020@cluster0.yw31qht.mongodb.net/WBD?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("connected successfully");
+    console.log("Reddis Connected Successfully");
   })
-  .then(() => console.log("connected successfully"))
   .catch((err) => console.log("it has an error", err));
 
-// app.use('/api/v1/media/all', async (req, res) => {
-//   try {
-//     const media = await mediaModel.find();
-//     console.log(media)
-//     res.json(media);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).json(error);
-//   }
-// })
+app.use('/api/v1/media/all', async (req, res) => {
+  try {
+    const media = await mediaModel.find();
+    console.log(media)
+    res.json(media);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
+  }
+})
 
 app.use(function (req, res, next) {
   console.log(req.files); // JSON Object
@@ -100,15 +104,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //     return req.id;
 // })
 
-
 app.use("/courses", async (req, res) => {
   const course = await courses.find();
   //console.log(course)
   res.status(200).json(course);
-  
-})
-
-
+});
 
 // app.use(assignid);
 // app.set('view engine','ejs');
@@ -207,7 +207,7 @@ app.post("/register", async (req, res) => {
     subject: "OTP for sign in",
     text: `otp is ${otp}`,
   };
-  console.log(name, hashPass, name, email, phone, country, address)
+  console.log(name, hashPass, name, email, phone, country, address);
   const saveUser = new User({
     username: name,
     password: hashPass,
@@ -218,13 +218,13 @@ app.post("/register", async (req, res) => {
     Address: address,
     verified: false,
   });
-  console.log(saveUser)
+  console.log(saveUser);
   const newOTP = new OTP({
     email: email,
     OTP: otp,
     OTPTime: Date.now(),
   });
-  console.log(newOTP)
+  console.log(newOTP);
   OTP.find({ email: email }).then((otp) => {
     if (otp.length > 0) {
       OTP.deleteMany({ email: email });
@@ -239,7 +239,7 @@ app.post("/register", async (req, res) => {
     });
   });
   newOTP.save().then((otp) => {
-    console.log('otppppppppppppp')
+    console.log("otppppppppppppp");
 
     saveUser
       .save()
@@ -301,4 +301,4 @@ app.listen(port, () => {
   console.log("server running successfully");
 });
 
-module.exports = app
+module.exports = app;
