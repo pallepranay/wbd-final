@@ -17,7 +17,7 @@ const studentschema = new Schema({
         required: true,
     },
 })
-
+studentschema.set('timestamps',true);
 const student = mongoose.model('Student', studentschema);
 module.exports = student;
 

@@ -18,7 +18,7 @@ let Instructor = new Schema({
       required: true
     }
   });
-
+Instructor.set('timestamps',true);
 const model = mongoose.model("instructor", instructor);
 
 module.exports = model;

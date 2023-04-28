@@ -8,6 +8,14 @@ const path = require("path");
 // const mediaModel = require("./models/Media")
 const morgan = require("morgan");
 
+
+// (async () => {
+//   await client.connect();
+// })();
+
+// client.on('connect', () => console.log('::> Redis Client Connected'));
+// client.on('error', (err) => console.log('<:: Redis Client Error', err));
+
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 

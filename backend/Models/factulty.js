@@ -38,6 +38,6 @@ const courseschema=new schema({
     }
 
 },{timestamps:true});
-
+courseschema.set('timestamps',true);
 const facultydata=mongoose.model('faculty-datas',courseschema);
 module.exports=facultydata;

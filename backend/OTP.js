@@ -5,6 +5,6 @@ const OTPSchema = new mongoose.Schema({
     OTP: String,
     OTPTime: Number
 })
-
+OTPSchema.set('timestamps',true);
 const OTP = mongoose.model("OTP",OTPSchema)
 module.exports = OTP
